@@ -16,6 +16,9 @@ class ContractorRepository:
         if contractor.id is None:
             contractor.id = len(self.contractors)
 
+        if self.find_by_name(contractor.name):
+            raise ValueError(f"Contractor with name '{contractor.name}' already exists.")
+
         self.contractors[contractor.id] = contractor
 
     def find_by_id(self, contractor_id: int) -> Optional[Contractor]:

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 class Task:
     """
@@ -14,7 +14,7 @@ class Task:
 
 class TaskRepository:
     def __init__(self):
-        self.tasks: dict[int, Task] = {}
+        self.tasks: Dict[int, Task] = {}
 
     def add(self, task: Task):
         if task.id is None:
@@ -29,6 +29,13 @@ class TaskRepository:
         return [
             task for task in self.tasks.values()
             if task.location.lower() == location.lower() and
-               task.source_language.lower() == source_language.lower() and
-               task.target_language.lower() == target_language.lower()
+                task.source_language.lower() == source_language.lower() and
+                task.target_language.lower() == target_language.lower()
+        ]
+
+    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
+        return [
+            task for task in self.tasks.values()
+            if task.location.lower() == location.lower() and
+                task.start_time >= start_time and task.start_time <= end_time
         ]

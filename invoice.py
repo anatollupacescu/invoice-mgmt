@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List,Optional
+from typing import Dict, List, Optional
 from task import Task
 from contractor import Contractor
 
@@ -29,7 +29,6 @@ class Invoice:
         if self.start_time >= self.end_time:
             raise ValueError("Start time must be before end time")
 
-
 class DraftInvoice(Invoice):
     """
     The Draft Invoice object inherits from Invoice
@@ -57,12 +56,13 @@ class InvoiceRepository:
     Once submitted, invoices become immutable (no editing or deletion).
     """
     def __init__(self):
-        self.invoices: dict[int, Invoice] = {}  # in memory of now, replace with DB in the future
+        self.invoices: Dict[int, Invoice] = {}  # in memory of now, replace with DB in the future
 
     def save(self, invoice: Invoice):
-        if invoice.id is None:
-            invoice.id = len(self.invoices)
+        if invoice.id is not None:
+            raise ValueError(f"Unexpected ID {invoice.id}")
 
+        invoice.id = len(self.invoices)
         self.invoices[invoice.id] = invoice
 
     def get_by_task(self, task: Task) -> Optional[Invoice]:
