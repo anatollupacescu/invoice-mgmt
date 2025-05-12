@@ -2,7 +2,7 @@ from datetime import datetime
 import sys
 from invoice import  InvoiceRepository, DraftInvoiceRepository
 from service import InvoiceManagementService, DraftInvoiceService
-from task import TaskRepository, Task
+from task import InMemTaskRepository, Task
 from contractor import ContractorRepository, Contractor
 
 if __name__ == "__main__":
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     contractor_repo.add(contractor1)
     contractor_repo.add(contractor2)
 
-    task_repo = TaskRepository()
+    task_repo = InMemTaskRepository()
     task_repo.add(task1)
     task_repo.add(task2)
 

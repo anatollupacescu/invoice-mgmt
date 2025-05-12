@@ -10,6 +10,7 @@ python3 -m unittest discover tests
 python -m venv venv
 source venv/bin/activate
 pip install django djangorestframework psycopg2-binary
+pip install django-stubs djangorestframework-stubs pydantic
 django-admin startproject config .
 python manage.py startapp api
 ```

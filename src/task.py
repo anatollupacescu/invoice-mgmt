@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Dict, List, Optional
+from abc import ABC, abstractmethod
 
 class Task:
     """
@@ -12,7 +13,21 @@ class Task:
         self.target_language = target_language
         self.start_time = start_time
 
-class TaskRepository:
+class TaskRepository(ABC):
+    @abstractmethod
+    def add(self, task: Task):
+        pass
+    @abstractmethod
+    def get(self, task_id: int) -> Optional[Task]:
+        pass
+    @abstractmethod
+    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> List[Task]:
+        pass
+    @abstractmethod
+    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
+        pass
+
+class InMemTaskRepository:
     def __init__(self):
         self.tasks: Dict[int, Task] = {}
 
