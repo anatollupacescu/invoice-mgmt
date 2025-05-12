@@ -10,8 +10,8 @@ class Invoice:
     The Invoice object represents a submitted invoice.
     Invariants and validations are enforced on creation.
     """
-    def __init__(self, contractor: Contractor, task: Task, start_time: datetime, end_time: datetime, signature: str, id: Optional[int] = None):
-        self.id = id
+    def __init__(self, contractor: Contractor, task: Task, start_time: datetime, end_time: datetime, signature: str, invoice_id: Optional[int] = None):
+        self.id = invoice_id
         self.contractor = contractor
         self.task = task
         self.start_time = start_time
@@ -36,8 +36,8 @@ class DraftInvoice(Invoice):
                  start_time: datetime,
                  end_time: datetime,
                  signature: str,
-                 id: Optional[int] = None):
-        super().__init__(contractor, task, start_time, end_time, signature, id)
+                 invoice_id: Optional[int] = None):
+        super().__init__(contractor, task, start_time, end_time, signature, invoice_id)
         self.last_saved = datetime.now()
 
     def update_last_saved(self):
@@ -97,5 +97,5 @@ class DraftInvoiceRepository:
 
     def delete(self, draft_invoice_id: int):
         if draft_invoice_id not in self.draft_invoices:
-            raise ValueError("Draft invoice with ID {} not found.".format(draft_invoice_id))
+            raise ValueError(f"Draft invoice with ID {draft_invoice_id} not found")
         del self.draft_invoices[draft_invoice_id]

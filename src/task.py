@@ -6,8 +6,8 @@ class Task:
     """
     The Task object
     """
-    def __init__(self, id: Optional[int], location: str, source_language: str, target_language: str, start_time: datetime):
-        self.id = id
+    def __init__(self, task_id: Optional[int], location: str, source_language: str, target_language: str, start_time: datetime):
+        self.id = task_id
         self.location = location
         self.source_language = source_language
         self.target_language = target_language

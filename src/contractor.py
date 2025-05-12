@@ -4,8 +4,8 @@ class Contractor:
     """
     The Contractor object
     """
-    def __init__(self, id: Optional[int], name: str):
-        self.id = id
+    def __init__(self, contractor_id: Optional[int], name: str):
+        self.id = contractor_id
         self.name = name
 
 class ContractorRepository:

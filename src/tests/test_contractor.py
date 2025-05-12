@@ -1,12 +1,11 @@
 import unittest
 import sys
 from pathlib import Path
+from contractor import Contractor, ContractorRepository
 
 # Add the src directory to the Python path
 src_path = Path(__file__).parent
 sys.path.append(str(src_path))
-
-from contractor import Contractor, ContractorRepository
 
 class TestContractor(unittest.TestCase):
     def test_contractor_creation_with_id(self):
