@@ -15,7 +15,6 @@ class Task(models.Model):
     def __str__(self):
         return f"Task {self.id} at {self.location}"
 
-# Register your models here.
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'location', 'source_language', 'target_language', 'start_time')
