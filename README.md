@@ -14,3 +14,13 @@ pip install django-stubs djangorestframework-stubs pydantic
 django-admin startproject config .
 python manage.py startapp api
 ```
+
+#### migrations
+
+```sh
+python manage.py makemigrations
+
+docker start db
+
+python manage.py migrate
+```
