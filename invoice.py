@@ -20,11 +20,7 @@ class Invoice:
         self.validate()
 
     def validate(self):
-        if self.start_time is None:
-            raise ValueError("Start time is required")
-        if self.end_time is None:
-            raise ValueError("End time is required")
-        if self.signature is None or self.signature.strip() == "":
+        if self.signature.strip() == "":
             raise ValueError("Signature is required")
         if self.start_time >= self.end_time:
             raise ValueError("Start time must be before end time")
@@ -35,8 +31,8 @@ class DraftInvoice(Invoice):
     but additionally keeps track of the last time it was updated
     """
     def __init__(self,
-                 contractor,
-                 task,
+                 contractor: Contractor,
+                 task: Task,
                  start_time: datetime,
                  end_time: datetime,
                  signature: str,

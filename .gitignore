@@ -11,3 +11,4 @@ env/
 logs/
 pytest_cache/
 .ropeproject/
+venv
