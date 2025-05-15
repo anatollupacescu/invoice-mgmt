@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List,Optional
 from task import TaskRepository
-from contractor import ContractorRepository
+from Interpreter import ContractorRepository
 from invoice import  InvoiceRepository, DraftInvoiceRepository, DraftInvoice
 
 # Use Case (Service) Objects
