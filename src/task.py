@@ -27,7 +27,7 @@ class TaskRepository(ABC):
     def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
         pass
 
-class InMemTaskRepository:
+class InMemTaskRepository(TaskRepository):
     def __init__(self):
         self.tasks: Dict[int, Task] = {}
 
