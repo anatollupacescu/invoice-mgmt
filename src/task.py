@@ -1,4 +1,3 @@
-from __future__ import annotations
 from datetime import datetime
 from abc import ABC, abstractmethod
 

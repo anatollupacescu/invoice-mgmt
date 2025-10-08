@@ -2,7 +2,6 @@ from contextlib import contextmanager
 from datetime import datetime
 from psycopg2.extensions import cursor
 from django.db import transaction, connection
-from __future__ import annotations
 from src.task import Task, TaskRepository
 
 class BaseDAO:
