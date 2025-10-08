@@ -1,5 +1,5 @@
+from __future__ import annotations
 from datetime import datetime
-from typing import Dict, List, Optional
 from task import Task
 from contractor import Contractor
 
@@ -10,7 +10,7 @@ class Invoice:
     The Invoice object represents a submitted invoice.
     Invariants and validations are enforced on creation.
     """
-    def __init__(self, contractor: Contractor, task: Task, start_time: datetime, end_time: datetime, signature: str, invoice_id: Optional[int] = None):
+    def __init__(self, contractor: Contractor, task: Task, start_time: datetime, end_time: datetime, signature: str, invoice_id: int | None = None):
         self.id = invoice_id
         self.contractor = contractor
         self.task = task
@@ -36,7 +36,7 @@ class DraftInvoice(Invoice):
                  start_time: datetime,
                  end_time: datetime,
                  signature: str,
-                 invoice_id: Optional[int] = None):
+                 invoice_id: int | None = None):
         super().__init__(contractor, task, start_time, end_time, signature, invoice_id)
         self.last_saved = datetime.now()
 
@@ -52,7 +52,7 @@ class InvoiceRepository:
     Once submitted, invoices become immutable (no editing or deletion).
     """
     def __init__(self):
-        self.invoices: Dict[int, Invoice] = {}  # in memory of now, replace with DB in the future
+        self.invoices: dict[int, Invoice] = {}  # in memory of now, replace with DB in the future
 
     def save(self, invoice: Invoice):
         if invoice.id is not None:
@@ -61,7 +61,7 @@ class InvoiceRepository:
         invoice.id = len(self.invoices)
         self.invoices[invoice.id] = invoice
 
-    def get_by_task(self, task: Task) -> Optional[Invoice]:
+    def get_by_task(self, task: Task) -> Invoice | None:
         for invoice in self.invoices.values():
             if invoice.task == task:
                 return invoice
@@ -82,7 +82,7 @@ class DraftInvoiceRepository:
     def __init__(self):
         self.draft_invoices: dict[int, DraftInvoice] = {}
 
-    def get(self, draft_invoice_id: int) -> Optional[DraftInvoice]:
+    def get(self, draft_invoice_id: int) -> DraftInvoice | None:
         return self.draft_invoices.get(draft_invoice_id)
 
     def save(self, draft_invoice: DraftInvoice):
@@ -92,7 +92,7 @@ class DraftInvoiceRepository:
 
         self.draft_invoices[draft_invoice.id] = draft_invoice
 
-    def list_by_contractor(self, contractor: Contractor) -> List[DraftInvoice]:
+    def list_by_contractor(self, contractor: Contractor) -> list[DraftInvoice]:
         return [d for d in self.draft_invoices.values() if d.contractor.id == contractor.id]
 
     def delete(self, draft_invoice_id: int):

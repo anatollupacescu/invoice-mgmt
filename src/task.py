@@ -1,12 +1,12 @@
+from __future__ import annotations
 from datetime import datetime
-from typing import Dict, List, Optional
 from abc import ABC, abstractmethod
 
 class Task:
     """
     The Task object
     """
-    def __init__(self, task_id: Optional[int], location: str, source_language: str, target_language: str, start_time: datetime):
+    def __init__(self, task_id: int | None, location: str, source_language: str, target_language: str, start_time: datetime):
         self.id = task_id
         self.location = location
         self.source_language = source_language
@@ -18,18 +18,18 @@ class TaskRepository(ABC):
     def add(self, task: Task):
         pass
     @abstractmethod
-    def get(self, task_id: int) -> Optional[Task]:
+    def get(self, task_id: int) -> Task | None:
         pass
     @abstractmethod
-    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> List[Task]:
+    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> list[Task]:
         pass
     @abstractmethod
-    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
+    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> list[Task]:
         pass
 
 class InMemTaskRepository(TaskRepository):
     def __init__(self):
-        self.tasks: Dict[int, Task] = {}
+        self.tasks: dict[int, Task] = {}
 
     def add(self, task: Task):
         if task.id is None:
@@ -37,10 +37,10 @@ class InMemTaskRepository(TaskRepository):
 
         self.tasks[task.id] = task
 
-    def get(self, task_id: int) -> Optional[Task]:
+    def get(self, task_id: int) -> Task | None:
         return self.tasks.get(task_id)
 
-    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> List[Task]:
+    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> list[Task]:
         return [
             task for task in self.tasks.values()
             if task.location.lower() == location.lower() and
@@ -48,7 +48,7 @@ class InMemTaskRepository(TaskRepository):
                 task.target_language.lower() == target_language.lower()
         ]
 
-    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
+    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> list[Task]:
         return [
             task for task in self.tasks.values()
             if task.location.lower() == location.lower() and

@@ -1,5 +1,5 @@
+from __future__ import annotations
 from datetime import datetime
-from typing import List,Optional
 from task import TaskRepository
 from contractor import ContractorRepository
 from invoice import  InvoiceRepository, DraftInvoiceRepository, DraftInvoice
@@ -76,11 +76,11 @@ class DraftInvoiceService:
 
     def update(self,
                 draft_invoice_id: int,
-                contractor_id: Optional[int],
-                task_id: Optional[int],
-                start_time: Optional[datetime],
-                end_time: Optional[datetime],
-                signature: Optional[str]):
+                contractor_id: int | None,
+                task_id: int | None,
+                start_time: datetime | None,
+                end_time: datetime | None,
+                signature: str | None):
         draft = self.draft_invoice_repository.get(draft_invoice_id)
         if draft is None:
             raise ValueError("Draft does not exist")
@@ -109,7 +109,7 @@ class DraftInvoiceService:
         draft.update_last_saved()
         self.draft_invoice_repository.save(draft)
 
-    def list(self, contractor_id: int) -> List[DraftInvoice]:
+    def list(self, contractor_id: int) -> list[DraftInvoice]:
         contractor = self.contractor_repository.find_by_id(contractor_id)
         if contractor is None:
             raise ValueError("Contractor does not exist")

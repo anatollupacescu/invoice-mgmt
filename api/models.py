@@ -1,13 +1,14 @@
+from __future__ import annotations
 from datetime import datetime
 from pydantic import BaseModel
-from typing import Optional, Dict, Callable, Any
+from typing import Callable, Any
 from src.task import Task
 
 class TaskModel(BaseModel):
     """
     JSON serializable Task model
     """
-    id: Optional[int]
+    id: int | None
     location: str
     source_language: str
     target_language: str
@@ -15,7 +16,7 @@ class TaskModel(BaseModel):
 
     class Config:
         # Specify the type for json_encoders
-        json_encoders: Dict[type, Callable[[Any], str]] = {
+        json_encoders: dict[type, Callable[[Any], str]] = {
             datetime: lambda v: v.isoformat()
         }
 

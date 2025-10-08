@@ -1,16 +1,16 @@
-from typing import Dict, Optional
+from __future__ import annotations
 
 class Contractor:
     """
     The Contractor object
     """
-    def __init__(self, contractor_id: Optional[int], name: str):
+    def __init__(self, contractor_id: int | None, name: str):
         self.id = contractor_id
         self.name = name
 
 class ContractorRepository:
     def __init__(self):
-        self.contractors: Dict[int, Contractor] = {}
+        self.contractors: dict[int, Contractor] = {}
 
     def add(self, contractor: Contractor):
         if contractor.id is None:
@@ -21,10 +21,10 @@ class ContractorRepository:
 
         self.contractors[contractor.id] = contractor
 
-    def find_by_id(self, contractor_id: int) -> Optional[Contractor]:
+    def find_by_id(self, contractor_id: int) -> Contractor | None:
         return self.contractors.get(contractor_id)
 
-    def find_by_name(self, name: str) -> Optional[Contractor]:
+    def find_by_name(self, name: str) -> Contractor | None:
         for contractor in self.contractors.values():
             if contractor.name.lower() == name.lower():
                 return contractor

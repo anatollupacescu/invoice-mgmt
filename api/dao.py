@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from datetime import datetime
 from psycopg2.extensions import cursor
 from django.db import transaction, connection
-from typing import List, Optional
+from __future__ import annotations
 from src.task import Task, TaskRepository
 
 class BaseDAO:
@@ -19,7 +19,7 @@ class BaseDAO:
             if self.cursor:
                 self.cursor.close()
 
-    def execute(self, query: str, params: Optional[list] = None) -> cursor:
+    def execute(self, query: str, params: list | None = None) -> cursor:
         """Execute a query and return the cursor"""
         with self.get_cursor() as cursor:
             cursor.execute(query, params or [])
@@ -30,7 +30,7 @@ class TaskDAO(BaseDAO, TaskRepository):
     def add(self, task: Task):
         return
 
-    def get(self, task_id: int) -> Optional[Task]:
+    def get(self, task_id: int) -> Task | None:
         with transaction.atomic():
             with self.get_cursor() as cursor:
                 cursor.execute("""
@@ -50,8 +50,8 @@ class TaskDAO(BaseDAO, TaskRepository):
                     return Task(**taskDTO)
         return None
 
-    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> List[Task]:
+    def find_by_attributes(self, location: str, source_language: str, target_language: str) -> list[Task]:
         return []
 
-    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> List[Task]:
+    def find_by_location_time_range(self, location: str, start_time: datetime, end_time: datetime) -> list[Task]:
         return []

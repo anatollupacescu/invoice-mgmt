@@ -1,18 +1,18 @@
-from typing_extensions import Optional
+from __future__ import annotations
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
 from api.dao import TaskDAO
 from .models import task_to_model
-from typing import Dict,Any
+from typing import Any
 
 class TaskAPIView(APIView):
-    def __init__(self, *args: Any, **kwargs: Dict[str, Any]) -> None:
+    def __init__(self, *args: Any, **kwargs: dict[str, Any]) -> None:
         super().__init__(*args, **kwargs)
         self.task_dao = TaskDAO()
 
-    def get(self, request: Request, task_id: Optional[int] = None) -> Response:
+    def get(self, request: Request, task_id: int | None = None) -> Response:
         if task_id is None:
             return Response("task id not provided", status=status.HTTP_410_GONE)
         try:
